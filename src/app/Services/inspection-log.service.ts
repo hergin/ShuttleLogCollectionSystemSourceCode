@@ -24,8 +24,8 @@ export class InspectionLogService {
   selectedBus: Bus;
   selectedDriver: User;
   selectedLoop: Loop;
-  
-  inspectionLog = new InspectionLog('', '', '', '', '', '', '', '', '', '', '');
+
+  inspectionLog = new InspectionLog('', '', '', '', '', '', '', '', '', '', '', '', '');
 
   constructor(private http: HttpClient, private inspecService: InspectionService) {
     const inspectionLogs: InspectionLog[] = JSON.parse(localStorage.getItem('inspectionLogs'));
@@ -40,7 +40,7 @@ export class InspectionLogService {
     return this.http.post<InspectionLog>(environment.BASE_API_URL + '/storeInspection.php', { data: inspectionLog });
 }
 
-postEndHour(){
+postEndHour() {
   this.inspectionLog.endingHours = this.getTimeStamp();
 }
 
@@ -61,7 +61,7 @@ getTimeStamp(): string {
 
 getDateStamp(): string {
   const date = new Date();
-  const datestamp =(date.getFullYear() + '/'
+  const datestamp = (date.getFullYear() + '/'
     + this.pad((date.getMonth()) + 1) + '/'
     + this.pad(date.getDate()) + ' ');
   return datestamp;

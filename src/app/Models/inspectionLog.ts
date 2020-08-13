@@ -10,6 +10,8 @@ export class InspectionLog {
     endingMileage: string;
     preInspection: string;
     postInspection: string;
+    preInspectionComment: string;
+    postInspectionComment: string;
     id?:   number;
     constructor(
         driver: string,
@@ -23,5 +25,7 @@ export class InspectionLog {
         endingMileage: string,
         preInspection: string,
         postInspection: string,
+        preInspectionComment: string,
+        postInspectionComment: string,
         id?:   number) {}
 }

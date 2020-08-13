@@ -32,6 +32,7 @@ export class PostInspectionComponent implements OnInit {
   endMileage = '';
   endingHours = '';
   strItem = '';
+  postComment = '';
 
   status = '';
   public onlineOffline: boolean = navigator.onLine;
@@ -41,6 +42,7 @@ export class PostInspectionComponent implements OnInit {
   checkHours;
   errorMessageState = false;
   errorMessageStateHours = false;
+  errorMessageStateComment = false;
 
   constructor(
     private inspecService: InspectionService,
@@ -61,7 +63,7 @@ export class PostInspectionComponent implements OnInit {
   }
 
   buttonState() {
-    return !((this.postItems.every(_ => _.state)) && (this.endMileage !== '') && (this.endingHours !== ''));
+    return !((this.postItems.every(_ => _.state)) && (this.endMileage !== '') && (this.endingHours !== '') && (this.postComment !== ''));
   }
 
   onKey(event: any) { // without type info
@@ -82,6 +84,15 @@ export class PostInspectionComponent implements OnInit {
      }
  }
 
+ onCommentKey(event: any) { // without type info
+  this.postComment = event.target.value;
+  if (this.validateComment()) {
+    this.errorMessageStateComment = true;
+  } else {
+    this.errorMessageStateComment = false;
+   }
+}
+
   submitLog(): void {
 
       if (!this.onlineOffline) {
@@ -96,6 +107,7 @@ export class PostInspectionComponent implements OnInit {
             this.createString();
             this.inspectionService.inspectionLog.endingMileage = this.endMileage;
             this.inspectionService.inspectionLog.endingHours = this.endingHours;
+            this.inspectionService.inspectionLog.postInspectionComment = this.postComment;
 
             const copy = { ...this.inspectionService.inspectionLog }; // Creating a copy of the member 'log'.
             this.inspectionService.storeLogsLocally(copy);
@@ -124,6 +136,14 @@ export class PostInspectionComponent implements OnInit {
   validateHours(): boolean {
     this.checkHours = Number(this.endingHours);
     return isNaN(this.checkHours);
+  }
+
+  validateComment(): boolean {
+    if (this.postComment === '') {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   createString() {
