@@ -25,12 +25,15 @@ export class PreInspectionComponent implements OnInit {
   //startMileage: string;
   strItem = '';
   startMileage = '';
+  startHours = '';
   checkMileage;
+  checkHours;
   selectedBus: Bus;
   selectedDriver: User;
   selectedLoop: Loop;
 
   errorMessageState = false;
+  errorMessageStateHours = false;
 
   constructor(
     private router: Router,
@@ -46,7 +49,7 @@ export class PreInspectionComponent implements OnInit {
     }
 
   buttonState() {
-    return !((this.preItems.every(_ => _.state)) && (this.startMileage !== ''));
+    return !((this.preItems.every(_ => _.state)) && (this.startMileage !== '') && (this.startHours !== ''));
   }
 
   onKey(event: any) { // without type info
@@ -56,6 +59,16 @@ export class PreInspectionComponent implements OnInit {
     } else {
       this.errorMessageState = false;
      }
+
+  }
+
+  onHourKey(event: any) { // without type info
+     this.startHours = event.target.value;
+     if (this.validateHours()) {
+       this.errorMessageStateHours = true;
+     } else {
+       this.errorMessageStateHours = false;
+      }
   }
 
   ngOnInit() {
@@ -67,17 +80,19 @@ export class PreInspectionComponent implements OnInit {
     }
 
     submitLog(): void {
-      if (this.validateMileage()) {
+      if (this.validateMileage() || this.validateHours() ) {
           this.errorMessageState = true;
+          this.errorMessageStateHours = true;
       } else {
           this.inspectionService.inspectionLog.timestamp = this.inspectionService.getTimeStamp();
           this.inspectionService.inspectionLog.date = this.inspectionService.getDateStamp();
-          this.inspectionService.inspectionLog.beginningHours = this.inspectionService.getTimeStamp();
+          //this.inspectionService.inspectionLog.beginningHours = this.inspectionService.getTimeStamp();
           this.inspectionService.inspectionLog.driver = this.inspectionService.selectedDriver.id;
           this.inspectionService.inspectionLog.busNumber = this.inspectionService.selectedBus.id;
           this.inspectionService.inspectionLog.loop = this.inspectionService.selectedLoop.id;
           this.createString();
           this.inspectionService.inspectionLog.startingMileage = this.startMileage;
+          this.inspectionService.inspectionLog.beginningHours = this.startHours;
 
           const copy = { ...this.inspectionService.inspectionLog }; // Creating a copy of the member 'log'.
           this.inspectionService.storeLogsLocally(copy);
@@ -90,6 +105,11 @@ export class PreInspectionComponent implements OnInit {
   validateMileage(): boolean {
     this.checkMileage = Number(this.startMileage);
     return isNaN(this.checkMileage);
+  }
+
+  validateHours(): boolean {
+    this.checkHours = Number(this.startHours);
+    return isNaN(this.checkHours);
   }
 
   createString() {

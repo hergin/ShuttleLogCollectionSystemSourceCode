@@ -20,8 +20,19 @@
         <div class="form-group">
             <input type="text"  id="name"  required="true" inputmode="numeric" (keyup)="onKey($event)" >
             <label for="name" placeholder="Starting Mileage" ></label>
+            
         </div>
         <div class="alert alert-danger text-center" [@simpleFadeAnimation]="'in'" *ngIf="errorMessageState">
+            <h4>
+                Please enter a valid number
+            </h4>
+        </div>
+
+        <div class="form-group">
+            <input type="text"  id="name"  required="true" inputmode="numeric" (keyup)="onHourKey($event)" >
+            <label for="name" placeholder="Beginning Hours" ></label>
+        </div>
+        <div class="alert alert-danger text-center" [@simpleFadeAnimation]="'in'" *ngIf="errorMessageStateHours">
             <h4>
                 Please enter a valid number
             </h4>
