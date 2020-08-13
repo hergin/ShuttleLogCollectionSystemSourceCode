@@ -22,7 +22,6 @@ export class PreInspectionComponent implements OnInit {
 
   allItems = [];
   preItems = [];
-  //startMileage: string;
   strItem = '';
   startMileage = '';
   startHours = '';
@@ -86,7 +85,6 @@ export class PreInspectionComponent implements OnInit {
       } else {
           this.inspectionService.inspectionLog.timestamp = this.inspectionService.getTimeStamp();
           this.inspectionService.inspectionLog.date = this.inspectionService.getDateStamp();
-          //this.inspectionService.inspectionLog.beginningHours = this.inspectionService.getTimeStamp();
           this.inspectionService.inspectionLog.driver = this.inspectionService.selectedDriver.id;
           this.inspectionService.inspectionLog.busNumber = this.inspectionService.selectedBus.id;
           this.inspectionService.inspectionLog.loop = this.inspectionService.selectedLoop.id;

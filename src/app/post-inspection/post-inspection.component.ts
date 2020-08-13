@@ -30,6 +30,7 @@ export class PostInspectionComponent implements OnInit {
   allItems = [];
   postItems = [];
   endMileage = '';
+  endingHours = '';
   strItem = '';
 
   status = '';
@@ -37,7 +38,9 @@ export class PostInspectionComponent implements OnInit {
   errMessage = 'Oops! There is no internet connection.';
 
   checkMileage;
+  checkHours;
   errorMessageState = false;
+  errorMessageStateHours = false;
 
   constructor(
     private inspecService: InspectionService,
@@ -58,7 +61,7 @@ export class PostInspectionComponent implements OnInit {
   }
 
   buttonState() {
-    return !((this.postItems.every(_ => _.state)) && (this.endMileage !== ''));
+    return !((this.postItems.every(_ => _.state)) && (this.endMileage !== '') && (this.endingHours !== ''));
   }
 
   onKey(event: any) { // without type info
@@ -69,6 +72,15 @@ export class PostInspectionComponent implements OnInit {
       this.errorMessageState = false;
      }
   }
+
+  onHourKey(event: any) { // without type info
+    this.endingHours = event.target.value;
+    if (this.validateHours()) {
+      this.errorMessageStateHours = true;
+    } else {
+      this.errorMessageStateHours = false;
+     }
+ }
 
   submitLog(): void {
 
@@ -81,9 +93,9 @@ export class PostInspectionComponent implements OnInit {
         } else {
 
             JSON.parse(localStorage.getItem('inspectionLogs'));
-            this.inspectionService.inspectionLog.endingHours = this.inspectionService.getTimeStamp();
             this.createString();
             this.inspectionService.inspectionLog.endingMileage = this.endMileage;
+            this.inspectionService.inspectionLog.endingHours = this.endingHours;
 
             const copy = { ...this.inspectionService.inspectionLog }; // Creating a copy of the member 'log'.
             this.inspectionService.storeLogsLocally(copy);
@@ -107,6 +119,11 @@ export class PostInspectionComponent implements OnInit {
   validateMileage(): boolean {
     this.checkMileage = Number(this.endMileage);
     return isNaN(this.checkMileage);
+  }
+
+  validateHours(): boolean {
+    this.checkHours = Number(this.endingHours);
+    return isNaN(this.checkHours);
   }
 
   createString() {
