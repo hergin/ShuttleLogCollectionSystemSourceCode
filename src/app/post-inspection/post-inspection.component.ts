@@ -94,8 +94,13 @@ export class PostInspectionComponent implements OnInit {
         this.errMessage = 'Oops! There is no internet connection.';
       } else {
 
-         if (this.validateMileage()) {
-          this.errorMessageState = true;
+        if (this.validateMileage() || this.validateHours() ) {
+          if (this.validateMileage()) {
+            this.errorMessageState = true;
+          }
+          if (this.validateHours()) {
+            this.errorMessageStateHours = true;
+          }
         } else {
 
             JSON.parse(localStorage.getItem('inspectionLogs'));
@@ -133,7 +138,7 @@ export class PostInspectionComponent implements OnInit {
     return isNaN(this.checkHours);
   }
 
-  
+
 
   createString() {
     for (let i = 0 ;  i < this.postItems.length ; i++) {
