@@ -42,7 +42,6 @@ export class PostInspectionComponent implements OnInit {
   checkHours;
   errorMessageState = false;
   errorMessageStateHours = false;
-  errorMessageStateComment = false;
 
   constructor(
     private inspecService: InspectionService,
@@ -63,7 +62,7 @@ export class PostInspectionComponent implements OnInit {
   }
 
   buttonState() {
-    return !((this.postItems.every(_ => _.state)) && (this.endMileage !== '') && (this.endingHours !== '') && (this.postComment !== ''));
+    return !((this.postItems.every(_ => _.state)) && (this.endMileage !== '') && (this.endingHours !== '') );
   }
 
   onKey(event: any) { // without type info
@@ -86,11 +85,7 @@ export class PostInspectionComponent implements OnInit {
 
  onCommentKey(event: any) { // without type info
   this.postComment = event.target.value;
-  if (this.validateComment()) {
-    this.errorMessageStateComment = true;
-  } else {
-    this.errorMessageStateComment = false;
-   }
+
 }
 
   submitLog(): void {
@@ -138,13 +133,7 @@ export class PostInspectionComponent implements OnInit {
     return isNaN(this.checkHours);
   }
 
-  validateComment(): boolean {
-    if (this.postComment === '') {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  
 
   createString() {
     for (let i = 0 ;  i < this.postItems.length ; i++) {

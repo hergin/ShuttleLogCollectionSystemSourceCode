@@ -34,7 +34,7 @@ export class PreInspectionComponent implements OnInit {
 
   errorMessageState = false;
   errorMessageStateHours = false;
-  errorMessageStateComment = false;
+
 
   constructor(
     private router: Router,
@@ -50,7 +50,7 @@ export class PreInspectionComponent implements OnInit {
     }
 
   buttonState() {
-    return !((this.preItems.every(_ => _.state)) && (this.startMileage !== '') && (this.startHours !== '') && (this.preComment !== ''));
+    return !((this.preItems.every(_ => _.state)) && (this.startMileage !== '') && (this.startHours !== '') );
   }
 
   onKey(event: any) { // without type info
@@ -74,12 +74,8 @@ export class PreInspectionComponent implements OnInit {
 
   onCommentKey(event: any) { // without type info
     this.preComment = event.target.value;
-    if (this.validateComment()) {
-      this.errorMessageStateComment = true;
-    } else {
-      this.errorMessageStateComment = false;
-     }
- }
+
+  }
 
   ngOnInit() {
     this.preItems = this.inspectionService.preItems;
@@ -90,15 +86,12 @@ export class PreInspectionComponent implements OnInit {
     }
 
     submitLog(): void {
-      if (this.validateMileage() || this.validateHours() || this.validateComment() ) {
+      if (this.validateMileage() || this.validateHours() ) {
           if (this.validateMileage()) {
             this.errorMessageState = true;
           }
           if (this.validateHours()) {
             this.errorMessageStateHours = true;
-          }
-          if (this.validateComment()) {
-            this.errorMessageStateComment = true;
           }
       } else {
           this.inspectionService.inspectionLog.timestamp = this.inspectionService.getTimeStamp();
@@ -129,13 +122,7 @@ export class PreInspectionComponent implements OnInit {
     return isNaN(this.checkHours);
   }
 
-  validateComment(): boolean {
-    if (this.preComment === '') {
-      return true;
-    } else {
-      return false;
-    }
-  }
+
 
   createString() {
     for (let i = 0 ;  i < this.preItems.length ; i++) {

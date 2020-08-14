@@ -19,7 +19,7 @@
         
         <div class="form-group">
             <input type="text"  id="name"  required="true" inputmode="numeric" (keyup)="onKey($event)" >
-            <label for="name" placeholder="Starting Mileage" ></label>
+            <label for="name" placeholder="Starting Mileage*" ></label>
             
         </div>
         <div class="alert alert-danger text-center" [@simpleFadeAnimation]="'in'" *ngIf="errorMessageState">
@@ -30,7 +30,7 @@
 
         <div class="form-group">
             <input type="text"  id="name"  required="true" inputmode="numeric" (keyup)="onHourKey($event)" >
-            <label for="name" placeholder="Beginning Hours" ></label>
+            <label for="name" placeholder="Beginning Hours*" ></label>
         </div>
         <div class="alert alert-danger text-center" [@simpleFadeAnimation]="'in'" *ngIf="errorMessageStateHours">
             <h4>
@@ -40,13 +40,9 @@
 
         <div class="form-group">
             <input type="text"  id="name"  required="true" inputmode="text" (keyup)="onCommentKey($event)" >
-            <label for="name" placeholder="Pre Inspection Comment" ></label>
+            <label for="name" placeholder="List any damage or non-working items" ></label>
         </div>
-        <div class="alert alert-danger text-center" [@simpleFadeAnimation]="'in'" *ngIf="errorMessageStateComment">
-            <h4>
-                Please write a comment
-            </h4>
-        </div>
+        
 
     </form>
   
